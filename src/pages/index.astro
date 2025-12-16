@@ -1,11 +1,105 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import ArrowCard from '@components/ArrowCard.astro'
+import Container from '@components/Container.astro'
+import Link from '@components/Link.astro'
+import { HOME, SITE, SOCIALS } from '@consts'
+import Layout from '@layouts/Layout.astro'
+import { getCollection } from 'astro:content'
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const blog = (await getCollection('blog'))
+  .filter(post => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, SITE.NUM_POSTS_ON_HOMEPAGE);
 ---
 
-<Layout>
-	<Welcome />
+<Layout
+  title={HOME.TITLE}
+  description={HOME.DESCRIPTION}
+>
+  <Container>
+    <h4 class="animate font-semibold">
+      Hello, Welcome to BusKhoja Blog <span class="text-xl">👋🏻</span>
+    </h4>
+    <div class="space-y-16">
+      <section>
+        <article class="space-y-6">
+          <p>
+            This is where we share everything – from the latest updates on our
+            platform to deep dives into the tech that makes it all tick. Think
+            of it as our digital workshop diary.
+          </p>
+
+          <div class="animate pt-4 border-t">
+            <h5>
+              What you'll find here:
+            </h5>
+            <ul>
+              <li>Feature announcements & release notes</li>
+              <li>Technical deep-dives & architecture decisions</li>
+              <li>Performance optimizations & scaling stories</li>
+              <li>
+                Behind-the-scenes of building a real-time transit platform
+              </li>
+              <li>
+                Behind-the-scenes of building a real-time transit platform
+              </li>
+              <li class="italic">
+                (and more...)
+              </li>
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      <section class="animate space-y-6">
+        <div class="flex flex-wrap gap-y-2 items-center justify-between">
+          <h5 class="font-semibold">Latest posts</h5>
+          <Link href="/blog"> See all posts </Link>
+        </div>
+        <ul class="flex flex-col gap-4">
+          {
+            blog.map(post => (
+              <li>
+                <ArrowCard entry={post} />
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="animate space-y-4">
+        <h5 class="font-semibold">Let's Connect</h5>
+        <article>
+          <p>
+            If you want to get in touch with us about something or just wana
+            reach out on social media or send us an email.
+          </p>
+        </article>
+        <ul class="flex flex-wrap gap-2">
+          {
+            SOCIALS.map(SOCIAL => (
+              <li class="flex gap-x-2 text-nowrap">
+                <Link
+                  href={SOCIAL.HREF}
+                  external
+                  aria-label={`${SITE.NAME} on ${SOCIAL.NAME}`}
+                >
+                  {SOCIAL.NAME}
+                </Link>
+                /
+              </li>
+            ))
+          }
+          <li class="line-clamp-1">
+            <Link
+              href={`mailto:${SITE.EMAIL}`}
+              aria-label={`Email ${SITE.NAME}`}
+            >
+              {SITE.EMAIL}
+            </Link>
+          </li>
+        </ul>
+      </section>
+    </div>
+  </Container>
 </Layout>

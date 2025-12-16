@@ -1,0 +1,253 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+
+:root {
+	--background: oklch(0.973 0.0133 286.1503);
+	--foreground: oklch(0.3015 0.0572 282.4176);
+	--card: oklch(1 0 0);
+	--card-foreground: oklch(0.3015 0.0572 282.4176);
+	--popover: oklch(1 0 0);
+	--popover-foreground: oklch(0.3015 0.0572 282.4176);
+	--primary: oklch(0.5417 0.179 288.0332);
+	--primary-foreground: oklch(1 0 0);
+	--secondary: oklch(0.9174 0.0435 292.6901);
+	--secondary-foreground: oklch(0.4143 0.1039 288.1742);
+	--muted: oklch(0.958 0.0133 286.1454);
+	--muted-foreground: oklch(0.5426 0.0465 284.7435);
+	--accent: oklch(0.9221 0.0373 262.141);
+	--accent-foreground: oklch(0.3015 0.0572 282.4176);
+	--destructive: oklch(0.6861 0.2061 14.9941);
+	--destructive-foreground: oklch(1 0 0);
+	--border: oklch(0.9115 0.0216 285.9625);
+	--input: oklch(0.9115 0.0216 285.9625);
+	--ring: oklch(0.5417 0.179 288.0332);
+	--radius: 0.5rem;
+	--shadow-x: 0px;
+	--shadow-y: 4px;
+	--shadow-blur: 10px;
+	--shadow-spread: 0px;
+	--shadow-opacity: 0.12;
+	--shadow-color: hsl(240 30% 25%);
+	--shadow-2xs: 0px 4px 10px 0px hsl(240 30% 25% / 0.06);
+	--shadow-xs: 0px 4px 10px 0px hsl(240 30% 25% / 0.06);
+	--shadow-sm:
+		0px 4px 10px 0px hsl(240 30% 25% / 0.12), 0px 1px 2px -1px hsl(240 30% 25% / 0.12);
+	--shadow:
+		0px 4px 10px 0px hsl(240 30% 25% / 0.12), 0px 1px 2px -1px hsl(240 30% 25% / 0.12);
+	--shadow-md:
+		0px 4px 10px 0px hsl(240 30% 25% / 0.12), 0px 2px 4px -1px hsl(240 30% 25% / 0.12);
+	--shadow-lg:
+		0px 4px 10px 0px hsl(240 30% 25% / 0.12), 0px 4px 6px -1px hsl(240 30% 25% / 0.12);
+	--shadow-xl:
+		0px 4px 10px 0px hsl(240 30% 25% / 0.12), 0px 8px 10px -1px hsl(240 30% 25% / 0.12);
+	--shadow-2xl: 0px 4px 10px 0px hsl(240 30% 25% / 0.3);
+	--tracking-normal: 0em;
+	--spacing: 0.25rem;
+}
+
+.dark {
+	--background: oklch(0.1743 0.0227 283.7998);
+	--foreground: oklch(0.9185 0.0257 285.8834);
+	--card: oklch(0.2284 0.0384 282.9324);
+	--card-foreground: oklch(0.9185 0.0257 285.8834);
+	--popover: oklch(0.2284 0.0384 282.9324);
+	--popover-foreground: oklch(0.9185 0.0257 285.8834);
+	--primary: oklch(0.7162 0.1597 290.3962);
+	--primary-foreground: oklch(0.1743 0.0227 283.7998);
+	--secondary: oklch(0.3139 0.0736 283.4591);
+	--secondary-foreground: oklch(0.8367 0.0849 285.9111);
+	--muted: oklch(0.271 0.0621 281.4377);
+	--muted-foreground: oklch(0.7166 0.0462 285.1741);
+	--accent: oklch(0.3354 0.0828 280.9705);
+	--accent-foreground: oklch(0.9185 0.0257 285.8834);
+	--destructive: oklch(0.6861 0.2061 14.9941);
+	--destructive-foreground: oklch(1 0 0);
+	--border: oklch(0.3261 0.0597 282.5832);
+	--input: oklch(0.3261 0.0597 282.5832);
+	--ring: oklch(0.7162 0.1597 290.3962);
+	--radius: 0.5rem;
+	--shadow-x: 0px;
+	--shadow-y: 4px;
+	--shadow-blur: 10px;
+	--shadow-spread: 0px;
+	--shadow-opacity: 0.12;
+	--shadow-color: hsl(240 30% 25%);
+	--shadow-2xs: 0px 4px 10px 0px hsl(240 30% 25% / 0.06);
+	--shadow-xs: 0px 4px 10px 0px hsl(240 30% 25% / 0.06);
+	--shadow-sm:
+		0px 4px 10px 0px hsl(240 30% 25% / 0.12), 0px 1px 2px -1px hsl(240 30% 25% / 0.12);
+	--shadow:
+		0px 4px 10px 0px hsl(240 30% 25% / 0.12), 0px 1px 2px -1px hsl(240 30% 25% / 0.12);
+	--shadow-md:
+		0px 4px 10px 0px hsl(240 30% 25% / 0.12), 0px 2px 4px -1px hsl(240 30% 25% / 0.12);
+	--shadow-lg:
+		0px 4px 10px 0px hsl(240 30% 25% / 0.12), 0px 4px 6px -1px hsl(240 30% 25% / 0.12);
+	--shadow-xl:
+		0px 4px 10px 0px hsl(240 30% 25% / 0.12), 0px 8px 10px -1px hsl(240 30% 25% / 0.12);
+	--shadow-2xl: 0px 4px 10px 0px hsl(240 30% 25% / 0.3);
+}
+
+@theme inline {
+	--font-sans: Ubuntu, sans-serif;
+	--font-mono: JetBrains Mono, monospace;
+
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-card: var(--card);
+	--color-card-foreground: var(--card-foreground);
+	--color-popover: var(--popover);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-secondary: var(--secondary);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-muted: var(--muted);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-accent: var(--accent);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-destructive: var(--destructive);
+	--color-destructive-foreground: var(--destructive-foreground);
+	--color-border: var(--border);
+	--color-input: var(--input);
+	--color-ring: var(--ring);
+
+
+	--radius-sm: calc(var(--radius) - 4px);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) + 4px);
+
+	--shadow-2xs: var(--shadow-2xs);
+	--shadow-xs: var(--shadow-xs);
+	--shadow-sm: var(--shadow-sm);
+	--shadow: var(--shadow);
+	--shadow-md: var(--shadow-md);
+	--shadow-lg: var(--shadow-lg);
+	--shadow-xl: var(--shadow-xl);
+	--shadow-2xl: var(--shadow-2xl);
+}
+
+@layer base {
+	* {
+		@apply border-border outline-ring/50;
+	}
+
+	body {
+		@apply bg-background text-foreground;
+	}
+}
+
+html {
+	overflow-y: scroll;
+	scroll-behavior: smooth;
+}
+
+.astro-code {
+	background-color: #ededfe !important;
+}
+
+.dark .astro-code,
+.dark .astro-code span {
+	color: var(--shiki-dark) !important;
+	background-color: var(--shiki-dark-bg) !important;
+}
+
+html,
+body {
+	@apply size-full;
+}
+
+body {
+	@apply font-sans antialiased;
+	@apply flex flex-col;
+	@apply bg-background;
+	@apply text-foreground;
+}
+
+header {
+	@apply fixed top-0 left-0 right-0 z-50 py-5;
+	@apply backdrop-blur-sm saturate-200;
+}
+
+main {
+	@apply flex-1 py-32;
+}
+
+footer {
+	@apply py-5 text-sm;
+}
+
+article {
+	@apply max-w-full prose dark:prose-invert prose-img:mx-auto prose-img:my-auto;
+	@apply prose-headings:font-semibold prose-strong:text-foreground prose-td:text-foreground prose-li:marker:text-muted-foreground prose-ol:marker:text-muted-foreground;
+	@apply prose-headings:text-foreground prose-blockquote:border-muted-foreground prose-hr:border-accent;
+}
+
+.contains-task-list {
+	list-style-type: none;
+	padding-inline-start: 0;
+
+	.task-list-item {
+		display: flex;
+		align-items: center;
+		margin-bottom: 0.5rem;
+		input[type="checkbox"] {
+			appearance: none;
+			-webkit-appearance: none;
+			width: 18px;
+			height: 18px;
+			margin-right: 8px;
+			border: 2px solid var(--border);
+			border-radius: 4px;
+			position: relative;
+
+			&:checked {
+				background-color: var(--primary);
+				border-color: var(--primary);
+			}
+
+			&:checked::after {
+				content: "✓";
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				color: var(--foreground);
+				font-size: 15px;
+				font-weight: bold;
+			}
+
+			&:focus {
+				outline: none;
+				box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+			}
+		}
+	}
+}
+
+article a {
+	@apply font-sans hover:text-primary underline underline-offset-2;
+	@apply decoration-primary/30;
+	@apply transition-colors duration-300 ease-in-out;
+}
+
+
+.animate {
+	@apply opacity-0 translate-y-3;
+	@apply transition-all duration-700 ease-out;
+}
+
+.animate.show {
+	@apply opacity-100 translate-y-0;
+}
+
+html #back-to-top {
+	@apply opacity-0 pointer-events-none;
+}
+
+html.scrolled #back-to-top {
+	@apply opacity-100 pointer-events-auto;
+}

@@ -4,11 +4,33 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "dev:network": "astro dev --host",
+    "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "preview:network": "astro preview --host",
+    "astro": "astro",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "astro": "^5.16.5"
+    "@astrojs/check": "^0.9.6",
+    "@astrojs/mdx": "^4.3.13",
+    "@astrojs/rss": "^4.0.14",
+    "@astrojs/sitemap": "^3.6.0",
+    "@fontsource/jetbrains-mono": "^5.2.8",
+    "@fontsource/ubuntu": "^5.2.8",
+    "@fontsource/ubuntu-condensed": "^5.2.8",
+    "@tailwindcss/vite": "^4.1.18",
+    "astro": "^5.16.5",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.4.0",
+    "tailwindcss": "^4.1.18"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^6.7.1",
+    "@tailwindcss/typography": "^0.5.19",
+    "astro-eslint-parser": "^1.2.2",
+    "eslint": "^9.39.2",
+    "eslint-plugin-astro": "^1.5.0"
   }
 }
