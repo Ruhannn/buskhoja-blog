@@ -1,115 +1,48 @@
 ---
-import { api, REACTION_URL } from '@lib/api'
-import FormattedDate from './FormattedDate.astro'
-
 interface Props {
   slug: string
 }
 
 const { slug } = Astro.props
-
-async function getOrCreateRecord(slug: string) {
-  const response = await api.get(REACTION_URL, {
-    params: {
-      where: `(slug,eq,${slug})`,
-      pageSize: 1,
-      fields: 'content,createdAtArray,slug,👍,🎉,😊,🔥,❤️',
-    },
-  })
-
-  const records = response.data.records
-
-  if (records.length > 0) {
-    return records[0]
-  }
-
-  const createResponse = await api.post(REACTION_URL, {
-    fields: { slug },
-  })
-
-  return createResponse.data
-}
-
-const data = await getOrCreateRecord(slug)
-
-const emojiData = Object.entries(data.fields)
-  .filter(([key]) => /\p{Emoji}/u.test(key))
-  .map(([emoji, count]) => ({ emoji, count }))
-
-const { content, createdAtArray } = data.fields
-
-const comments: { comment: string, createdAt: string }[]
-  = content?.map((comment: string, index: number) => ({
-    comment,
-    createdAt: createdAtArray[index],
-  })) || [];
 ---
 
-<div data-slug={slug}>
-  <h4 class="text-lg font-semibold mb-3">React to this post</h4>
-  <div class="flex flex-wrap gap-2">
-    {
-      emojiData.map(e => (
-        <button
-          class="reaction-btn flex items-center gap-2 px-3 py-2 rounded-xl border border-border bg-card hover:bg-accent cursor-pointer hover:scale-105 active:scale-95 transition-all duration-200 disabled:bg-accent disabled:hover:scale-100"
-          data-emoji={e.emoji}
-          data-slug={slug}
-          data-id={data.id}
-        >
-          <span class="text-xl">{e.emoji}</span>
-          <span class="reaction-count text-sm">{e.count ?? 0}</span>
-        </button>
-      ))
-    }
-  </div>
-</div>
-
-<div>
-  <h3 class="text-xl font-semibold mb-4">Comments</h3>
-
-  <form
-    id="comment-form"
-    class="mb-6"
-  >
-    <div class="space-y-4">
-      <textarea
-        data-slug={slug}
-        data-reaction-id={data.id}
-        name="content"
-        required
-        rows="4"
-        class="w-full px-4 py-2 rounded-xl border border-border bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none"
-        placeholder="Write your comment..."
-      ></textarea>
-      <button
-        type="submit"
-        class="px-6 py-2 rounded-xl bg-secondary text-secondary-foreground transition-colors duration-300 ease-in-out cursor-pointer hover:bg-accent"
-      >
-        Post Comment
-      </button>
+<div data-slug={slug} id="blog-buttons-container">
+  <div id="reactions-container">
+    <h4 class="text-lg font-semibold mb-3">React to this post</h4>
+    <div class="flex flex-wrap gap-2" id="reactions-wrapper">
+      <div class="text-muted-foreground">Loading reactions...</div>
     </div>
-  </form>
+  </div>
 
-  <div class="comments-container space-y-4">
-    {
-      comments.length > 0
-? (
-        comments.map(item => (
-          <div class="comment-item p-4 rounded-xl border border-border bg-card">
-            <p class="comment-text text-foreground mb-2">{item.comment}</p>
-            <p class="comment-time text-sm text-muted-foreground">
-              Commented at:
-              <FormattedDate date={new Date(item.createdAt)} />
-            </p>
-          </div>
-        ))
-      )
-: (
-        <p class="no-comments text-muted-foreground">
-          No comments yet. Be the first to comment!
-        </p>
-      )
-    }
+  <div id="comments-section">
+    <h3 class="text-xl font-semibold mb-4">Comments</h3>
+
+    <form
+      id="comment-form"
+      class="mb-6"
+    >
+      <div class="space-y-4">
+        <textarea
+          data-slug={slug}
+          id="reaction-id-field"
+          name="content"
+          required
+          rows="4"
+          class="w-full px-4 py-2 rounded-xl border border-border bg-card text-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none"
+          placeholder="Write your comment..."
+        ></textarea>
+        <button
+          type="submit"
+          class="px-6 py-2 rounded-xl bg-secondary text-secondary-foreground transition-colors duration-300 ease-in-out cursor-pointer hover:bg-accent"
+        >
+          Post Comment
+        </button>
+      </div>
+    </form>
+
+    <div class="comments-container space-y-4" id="comments-wrapper">
+      <div class="text-muted-foreground">Loading comments...</div>
+    </div>
   </div>
 </div>
 
@@ -146,6 +79,128 @@ function markUserReaction(slug: string, emoji: string) {
   const reactions = getUserReactions()
   reactions[`${slug}:${emoji}`] = true
   saveUserReactions(reactions)
+}
+
+async function getOrCreateRecord(slug: string) {
+  const response = await api.get(REACTION_URL, {
+    params: {
+      where: `(slug,eq,${slug})`,
+      pageSize: 1,
+      fields: 'content,createdAtArray,slug,👍,🎉,😊,🔥,❤️',
+    },
+  })
+
+  const records = response.data.records
+
+  if (records.length > 0) {
+    return records[0]
+  }
+
+  const createResponse = await api.post(REACTION_URL, {
+    fields: { slug },
+  })
+
+  return createResponse.data
+}
+
+function renderReactions(data: any, slug: string) {
+  const wrapper = document.getElementById('reactions-wrapper')
+  if (!wrapper)
+    return
+
+  const emojiData = Object.entries(data.fields)
+    .filter(([key]) => /\p{Emoji}/u.test(key))
+    .map(([emoji, count]) => ({ emoji, count }))
+
+  if (emojiData.length === 0) {
+    wrapper.innerHTML = '<div class="text-muted-foreground">No reactions available</div>'
+    return
+  }
+
+  wrapper.innerHTML = emojiData.map((e) => {
+    const isReacted = hasUserReacted(slug, e.emoji)
+    return `
+      <button
+        class="reaction-btn flex items-center gap-2 px-3 py-2 rounded-xl border border-border bg-card hover:bg-accent cursor-pointer hover:scale-105 active:scale-95 transition-all duration-200 disabled:bg-accent disabled:hover:scale-100"
+        data-emoji="${e.emoji}"
+        data-slug="${slug}"
+        data-id="${data.id}"
+        ${isReacted ? 'disabled' : ''}
+      >
+        <span class="text-xl">${e.emoji}</span>
+        <span class="reaction-count text-sm">${e.count ?? 0}</span>
+      </button>
+    `
+  }).join('')
+
+
+  const reactionIdField = document.getElementById('reaction-id-field')
+  if (reactionIdField) {
+    reactionIdField.setAttribute('data-reaction-id', data.id)
+  }
+
+
+  wrapper.querySelectorAll('.reaction-btn').forEach((element) => {
+    const btn = element as HTMLButtonElement
+    btn.addEventListener('click', () => handleReactionClick(btn))
+  })
+}
+
+function renderComments(comments: { comment: string, createdAt: string }[]) {
+  const wrapper = document.getElementById('comments-wrapper')
+  if (!wrapper)
+    return
+
+  if (comments.length === 0) {
+    wrapper.innerHTML = '<p class="no-comments text-muted-foreground">No comments yet. Be the first to comment!</p>'
+    return
+  }
+
+  wrapper.innerHTML = comments.map((item) => {
+    const date = new Date(item.createdAt)
+    return `
+      <div class="comment-item p-4 rounded-xl border border-border bg-card">
+        <p class="comment-text text-foreground mb-2">${escapeHtml(item.comment)}</p>
+        <p class="comment-time text-sm text-muted-foreground">
+          Commented at: <time datetime="${item.createdAt}">${date.toLocaleString()}</time>
+        </p>
+      </div>
+    `
+  }).join('')
+}
+
+function escapeHtml(text: string) {
+  const div = document.createElement('div')
+  div.textContent = text
+  return div.innerHTML
+}
+
+async function loadData(slug: string) {
+  try {
+    const data = await getOrCreateRecord(slug)
+
+    const { content, createdAtArray } = data.fields
+
+    const comments: { comment: string, createdAt: string }[]
+      = content?.map((comment: string, index: number) => ({
+        comment,
+        createdAt: createdAtArray[index],
+      })) || []
+
+    renderReactions(data, slug)
+    renderComments(comments)
+  }
+  catch (error) {
+    console.error('Failed to load data:', error)
+    const reactionsWrapper = document.getElementById('reactions-wrapper')
+    const commentsWrapper = document.getElementById('comments-wrapper')
+    if (reactionsWrapper) {
+      reactionsWrapper.innerHTML = '<div class="text-red-500">Failed to load reactions</div>'
+    }
+    if (commentsWrapper) {
+      commentsWrapper.innerHTML = '<div class="text-red-500">Failed to load comments</div>'
+    }
+  }
 }
 
 async function updateReactionCount(
@@ -200,12 +255,6 @@ function createCommentElement(comment: string, createdAt: string) {
   return div
 }
 
-function escapeHtml(text: string) {
-  const div = document.createElement('div')
-  div.textContent = text
-  return div.innerHTML
-}
-
 async function handleComment(e: SubmitEvent) {
   e.preventDefault()
 
@@ -217,14 +266,16 @@ async function handleComment(e: SubmitEvent) {
     'button[type="submit"]',
   ) as HTMLButtonElement
 
-  const slug = contentElement?.getAttribute('data-slug')
-  const id = contentElement?.getAttribute('data-reaction-id')
+  const slugAttr = contentElement?.getAttribute('data-slug')
+  const idAttr = contentElement?.getAttribute('data-reaction-id')
 
-  if (!contentElement || !slug || !id) {
+  if (!contentElement || !slugAttr || !idAttr) {
     console.error('Missing required form data')
     return
   }
 
+  const slug = slugAttr
+  const id = idAttr
   const content = contentElement.value.trim()
   if (!content)
     return
@@ -233,7 +284,7 @@ async function handleComment(e: SubmitEvent) {
   const originalBtnText = submitBtn.textContent
   submitBtn.textContent = 'Posting...'
 
-  const container = document.querySelector('.comments-container')
+  const container = document.getElementById('comments-wrapper')
   const noComments = container?.querySelector('.no-comments')
 
   if (noComments) {
@@ -257,6 +308,8 @@ async function handleComment(e: SubmitEvent) {
 
     form.reset()
     contentElement.value = ''
+
+    await loadData(slug)
   }
   catch (error) {
     console.error('Failed to post comment:', error)
@@ -274,19 +327,28 @@ async function handleComment(e: SubmitEvent) {
   }
 }
 
-const form = document.getElementById('comment-form')
-if (form) {
-  form.addEventListener('submit', handleComment)
-}
 
-document.querySelectorAll('.reaction-btn').forEach((element) => {
-  const btn = element as HTMLButtonElement
-  const { emoji, slug } = btn.dataset
+function init() {
+  const container = document.getElementById('blog-buttons-container')
+  const slug = container?.getAttribute('data-slug')
 
-  if (emoji && slug && hasUserReacted(slug, emoji)) {
-    btn.disabled = true
+  if (!slug) {
+    console.error('Missing slug attribute')
+    return
   }
 
-  btn.addEventListener('click', () => handleReactionClick(btn))
-})
+  loadData(slug)
+
+  const form = document.getElementById('comment-form')
+  if (form) {
+    form.addEventListener('submit', handleComment)
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init)
+}
+else {
+  init()
+}
 </script>
