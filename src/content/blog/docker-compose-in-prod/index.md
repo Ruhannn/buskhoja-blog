@@ -3,9 +3,6 @@ title: "Why we Like Using Docker Compose in Production"
 description: "Here's why we used Docker Compose in 2025."
 date: "Dec 16 2025"
 ---
-
-## Why We Switched to Docker Compose for Our Production Setup
-
   Over the past couple of years, and one tool that's stuck with us through thick and thin is Docker Compose. Back in early 2025, we were juggling a mess of manual deployments and inconsistent environments between dev and prod. That's when we decided to give Docker Compose a real shot in production – not just for local dev, which everyone does, but for running our live services. Spoiler: it's been a game-changer for our project, even if it's not perfect for every scenario. Let me break down why we love it, where it shines on scalability, the upsides, the downsides, and toss in a real-world code snippet from our stack to show how straightforward it is.
 
 ## Quick Refresher: What Even Is Docker Compose?
