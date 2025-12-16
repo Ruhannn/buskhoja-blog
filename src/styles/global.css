@@ -153,6 +153,7 @@ html {
 .dark .astro-code span {
 	color: var(--shiki-dark) !important;
 	background-color: var(--shiki-dark-bg) !important;
+	@apply rounded-xl
 }
 
 html,
@@ -184,6 +185,7 @@ article {
 	@apply max-w-full prose dark:prose-invert prose-img:mx-auto prose-img:my-auto;
 	@apply prose-headings:font-semibold prose-strong:text-foreground prose-td:text-foreground prose-li:marker:text-muted-foreground prose-ol:marker:text-muted-foreground;
 	@apply prose-headings:text-foreground prose-blockquote:border-muted-foreground prose-hr:border-accent;
+	@apply prose-img:rounded-xl
 }
 
 .contains-task-list {
@@ -200,13 +202,13 @@ article {
 			width: 18px;
 			height: 18px;
 			margin-right: 8px;
-			border: 2px solid var(--border);
+			border: 1px solid var(--border);
 			border-radius: 4px;
 			position: relative;
+			background-color: var(--input);
 
 			&:checked {
 				background-color: var(--primary);
-				border-color: var(--primary);
 			}
 
 			&:checked::after {
@@ -215,7 +217,7 @@ article {
 				top: 50%;
 				left: 50%;
 				transform: translate(-50%, -50%);
-				color: var(--foreground);
+				color: #e2e2f5;
 				font-size: 15px;
 				font-weight: bold;
 			}
