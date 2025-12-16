@@ -22,6 +22,7 @@
     "@fontsource/ubuntu-condensed": "^5.2.8",
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.16.5",
+    "axios": "^1.13.2",
     "clsx": "^2.1.1",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.18"

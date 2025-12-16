@@ -1,7 +1,0 @@
-services:
-  blog:
-    image: YOUR_DOCKER_USERNAME/new-blog:latest
-    restart: unless-stopped
-    ports:
-      - "7096:80"
-

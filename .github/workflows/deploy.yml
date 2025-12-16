@@ -25,3 +25,6 @@ jobs:
           context: .
           push: true
           tags: ghcr.io/ruhannn/better-buskhoja/blog:latest
+          build-args: |
+            PUBLIC_NOCODB_API_URL=${{secrets.PUBLIC_NOCODB_API_URL}}
+            PUBLIC_NOCODB_API_TOKEN=${{secrets.PUBLIC_NOCODB_API_TOKEN}}
