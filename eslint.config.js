@@ -4,5 +4,5 @@ export default antfu({
   astro: true,
   rules:{
     "no-console":'off'
-  }
+  },
 })
