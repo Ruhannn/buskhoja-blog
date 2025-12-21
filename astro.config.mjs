@@ -16,8 +16,5 @@ export default defineConfig({
         dark: 'catppuccin-mocha',
       },
     },
-  },
-  build: {
-    inlineStylesheets: 'always',
-  },
+  }
 })
