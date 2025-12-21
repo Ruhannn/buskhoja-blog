@@ -18,7 +18,7 @@ ENV PUBLIC_NOCODB_API_TOKEN=$PUBLIC_NOCODB_API_TOKEN
 RUN bun run build
 
 FROM nginx:1.29.3-alpine AS runtime
-
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/dist /usr/share/nginx/html
 
 EXPOSE 80

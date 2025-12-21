@@ -11,7 +11,6 @@
         "@astrojs/sitemap": "^3.6.0",
         "@fontsource/jetbrains-mono": "^5.2.8",
         "@fontsource/ubuntu": "^5.2.8",
-        "@fontsource/ubuntu-condensed": "^5.2.8",
         "@tailwindcss/vite": "^4.1.18",
         "astro": "^5.16.5",
         "axios": "^1.13.2",
@@ -168,8 +167,6 @@
     "@fontsource/jetbrains-mono": ["@fontsource/jetbrains-mono@5.2.8", "", {}, "sha512-6w8/SG4kqvIMu7xd7wt6x3idn1Qux3p9N62s6G3rfldOUYHpWcc2FKrqf+Vo44jRvqWj2oAtTHrZXEP23oSKwQ=="],
 
     "@fontsource/ubuntu": ["@fontsource/ubuntu@5.2.8", "", {}, "sha512-esSJCpgigwWOm4Ug9f7AMozUyBq5Iobea5C9QYsl2OlCb62wZABBUbXahHLdFv5Ru4lJCD9tUX6xEAeLwUTNBg=="],
-
-    "@fontsource/ubuntu-condensed": ["@fontsource/ubuntu-condensed@5.2.8", "", {}, "sha512-j3QMC7kDp3WbXSx3rSsXn+z6FUHqru9ee9NW+DPyHFIpSkmy22/yBiqRxf28sPwX596MK6pPVYhu/dsD2Uj2qg=="],
 
     "@humanfs/core": ["@humanfs/core@0.19.1", "", {}, "sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA=="],
 
