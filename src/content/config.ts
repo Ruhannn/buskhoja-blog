@@ -1,13 +1,13 @@
-import { defineCollection, z } from 'astro:content'
+import { defineCollection, z } from "astro:content";
 
 const blog = defineCollection({
-  type: 'content',
+  type: "content",
   schema: z.object({
     title: z.string(),
     description: z.string(),
     date: z.coerce.date(),
     draft: z.boolean().optional(),
   }),
-})
+});
 
-export const collections = { blog }
+export const collections = { blog };

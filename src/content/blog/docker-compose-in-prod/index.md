@@ -61,7 +61,7 @@ services:
     image: our-backend
     command: npm start
     ports:
-      - '3000:3000'
+      - "3000:3000"
     depends_on:
       - db
     environment:

@@ -1,9 +1,9 @@
 ---
 interface Props {
-  slug: string
+  slug: string;
 }
 
-const { slug } = Astro.props
+const { slug } = Astro.props;
 ---
 
 <div data-slug={slug} id="reactions-section">
@@ -44,41 +44,41 @@ const { slug } = Astro.props
 </div>
 
 <script>
-import { api, COMMENTS_URL, REACTION_URL } from '@lib/api'
-import { escapeHTML } from 'astro/runtime/server/escape.js'
+import { api, COMMENTS_URL, REACTION_URL } from "@lib/api";
+import { escapeHTML } from "astro/runtime/server/escape.js";
 
-const STORAGE_KEY = 'user_reactions'
+const STORAGE_KEY = "user_reactions";
 
-type UserReactions = Record<string, boolean>
+type UserReactions = Record<string, boolean>;
 
 function getUserReactions(): UserReactions {
   try {
-    const stored = localStorage.getItem(STORAGE_KEY)
-    return stored ? JSON.parse(stored) : {}
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return stored ? JSON.parse(stored) : {};
   }
   catch {
-    return {}
+    return {};
   }
 }
 
 function saveUserReactions(reactions: UserReactions): void {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(reactions))
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(reactions));
   }
   catch (error) {
-    console.error('Failed to save reactions:', error)
+    console.error("Failed to save reactions:", error);
   }
 }
 
 function hasUserReacted(slug: string, emoji: string): boolean {
-  const reactions = getUserReactions()
-  return reactions[`${slug}:${emoji}`] === true
+  const reactions = getUserReactions();
+  return reactions[`${slug}:${emoji}`] === true;
 }
 
 function markUserReaction(slug: string, emoji: string): void {
-  const reactions = getUserReactions()
-  reactions[`${slug}:${emoji}`] = true
-  saveUserReactions(reactions)
+  const reactions = getUserReactions();
+  reactions[`${slug}:${emoji}`] = true;
+  saveUserReactions(reactions);
 }
 
 async function updateReactionCount(
@@ -89,88 +89,88 @@ async function updateReactionCount(
   await api.patch(REACTION_URL, {
     id: recordId,
     fields: { [emoji]: newCount },
-  })
+  });
 }
 
 async function handleReactionClick(btn: HTMLButtonElement): Promise<void> {
-  const { emoji, slug, id } = btn.dataset
-  const countEl = btn.querySelector('.reaction-count')
+  const { emoji, slug, id } = btn.dataset;
+  const countEl = btn.querySelector(".reaction-count");
 
   if (!emoji || !slug || !countEl || !id) {
-    console.warn('Missing required data attributes')
-    return
+    console.warn("Missing required data attributes");
+    return;
   }
 
   if (hasUserReacted(slug, emoji)) {
-    return
+    return;
   }
 
-  const oldCount = Number.parseInt(countEl.textContent || '0', 10)
-  const newCount = oldCount + 1
-  countEl.textContent = String(newCount)
-  btn.disabled = true
+  const oldCount = Number.parseInt(countEl.textContent || "0", 10);
+  const newCount = oldCount + 1;
+  countEl.textContent = String(newCount);
+  btn.disabled = true;
 
   try {
-    await updateReactionCount(id, emoji, newCount)
-    markUserReaction(slug, emoji)
+    await updateReactionCount(id, emoji, newCount);
+    markUserReaction(slug, emoji);
   }
   catch (error) {
-    console.error('Failed to update reaction:', error)
-    countEl.textContent = String(oldCount)
-    btn.disabled = false
+    console.error("Failed to update reaction:", error);
+    countEl.textContent = String(oldCount);
+    btn.disabled = false;
   }
 }
 
 function createCommentElement(comment: string, createdAt: string): HTMLDivElement {
-  const div = document.createElement('div')
-  div.className = 'comment-item p-4 rounded-xl border border-border bg-card'
+  const div = document.createElement("div");
+  div.className = "comment-item p-4 rounded-xl border border-border bg-card";
   div.innerHTML = `
     <p class="comment-text text-foreground mb-2">${escapeHTML(comment)}</p>
     <p class="comment-time text-sm text-muted-foreground">
-      Commented at: <time datetime="${createdAt}">${new Date(createdAt).toLocaleDateString('en-us', {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric',
+      Commented at: <time datetime="${createdAt}">${new Date(createdAt).toLocaleDateString("en-us", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
       })}</time>
     </p>
-  `
-  return div
+  `;
+  return div;
 }
 
 async function handleComment(e: Event): Promise<void> {
-  e.preventDefault()
+  e.preventDefault();
 
-  const form = e.currentTarget as HTMLFormElement
-  const contentElement = form.elements.namedItem('content') as HTMLTextAreaElement
-  const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement
-  const textarea = form.querySelector('textarea[data-slug]') as HTMLTextAreaElement
+  const form = e.currentTarget as HTMLFormElement;
+  const contentElement = form.elements.namedItem("content") as HTMLTextAreaElement;
+  const submitBtn = form.querySelector("button[type=\"submit\"]") as HTMLButtonElement;
+  const textarea = form.querySelector("textarea[data-slug]") as HTMLTextAreaElement;
 
-  const slug = textarea?.getAttribute('data-slug')
-  const id = textarea?.getAttribute('data-reaction-id')
+  const slug = textarea?.getAttribute("data-slug");
+  const id = textarea?.getAttribute("data-reaction-id");
 
   if (!contentElement || !slug || !id) {
-    console.error('Missing required form data')
-    return
+    console.error("Missing required form data");
+    return;
   }
 
-  const content = contentElement.value.trim()
+  const content = contentElement.value.trim();
   if (!content)
-    return
+    return;
 
-  submitBtn.disabled = true
-  const originalBtnText = submitBtn.textContent
-  submitBtn.textContent = 'Posting...'
+  submitBtn.disabled = true;
+  const originalBtnText = submitBtn.textContent;
+  submitBtn.textContent = "Posting...";
 
-  const container = document.querySelector('.comments-container')
-  const noComments = container?.querySelector('.no-comments')
+  const container = document.querySelector(".comments-container");
+  const noComments = container?.querySelector(".no-comments");
 
   if (noComments) {
-    noComments.remove()
+    noComments.remove();
   }
 
-  const tempComment = createCommentElement(content, new Date().toISOString())
-  tempComment.style.opacity = '0.6'
-  container?.insertBefore(tempComment, container.firstChild)
+  const tempComment = createCommentElement(content, new Date().toISOString());
+  tempComment.style.opacity = "0.6";
+  container?.insertBefore(tempComment, container.firstChild);
 
   try {
     await api.post(COMMENTS_URL, {
@@ -179,26 +179,26 @@ async function handleComment(e: Event): Promise<void> {
         content,
         Reactions: { id },
       },
-    })
+    });
 
-    tempComment.style.opacity = '1'
+    tempComment.style.opacity = "1";
 
-    form.reset()
-    contentElement.value = ''
+    form.reset();
+    contentElement.value = "";
   }
   catch (error) {
-    console.error('Failed to post comment:', error)
+    console.error("Failed to post comment:", error);
 
-    tempComment.remove()
+    tempComment.remove();
 
     if (container && container.children.length === 0) {
       container.innerHTML
-        = '<p class="no-comments text-muted-foreground">No comments yet. Be the first to comment!</p>'
+        = "<p class=\"no-comments text-muted-foreground\">No comments yet. Be the first to comment!</p>";
     }
   }
   finally {
-    submitBtn.disabled = false
-    submitBtn.textContent = originalBtnText
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalBtnText;
   }
 }
 
@@ -207,40 +207,40 @@ async function getOrCreateRecord(slug: string) {
     params: {
       where: `(slug,eq,${slug})`,
       pageSize: 1,
-      fields: 'content,createdAtArray,slug,👍,🎉,😊,🔥,❤️',
+      fields: "content,createdAtArray,slug,👍,🎉,😊,🔥,❤️",
     },
-  })
+  });
 
-  const records = response.data.records
+  const records = response.data.records;
 
   if (records.length > 0) {
-    return records[0]
+    return records[0];
   }
 
   const createResponse = await api.post(REACTION_URL, {
     fields: { slug },
-  })
+  });
 
-  return createResponse.data
+  return createResponse.data;
 }
 
 async function loadReactionsAndComments(): Promise<void> {
-  const section = document.getElementById('reactions-section')
-  const slug = section?.getAttribute('data-slug')
+  const section = document.getElementById("reactions-section");
+  const slug = section?.getAttribute("data-slug");
 
   if (!slug) {
-    console.error('Missing slug')
-    return
+    console.error("Missing slug");
+    return;
   }
 
   try {
-    const data = await getOrCreateRecord(slug)
+    const data = await getOrCreateRecord(slug);
 
     const emojiData = Object.entries(data.fields)
       .filter(([key]) => /\p{Emoji}/u.test(key))
-      .map(([emoji, count]) => ({ emoji, count }))
+      .map(([emoji, count]) => ({ emoji, count }));
 
-    const reactionsContainer = document.getElementById('reactions-container')
+    const reactionsContainer = document.getElementById("reactions-container");
     if (reactionsContainer) {
       reactionsContainer.innerHTML = emojiData.map(e => `
         <button
@@ -252,27 +252,27 @@ async function loadReactionsAndComments(): Promise<void> {
           <span class="text-xl">${e.emoji}</span>
           <span class="reaction-count text-sm">${e.count ?? 0}</span>
         </button>
-      `).join('')
+      `).join("");
 
-      reactionsContainer.querySelectorAll('.reaction-btn').forEach((element) => {
-        const btn = element as HTMLButtonElement
-        const { emoji, slug } = btn.dataset
+      reactionsContainer.querySelectorAll(".reaction-btn").forEach((element) => {
+        const btn = element as HTMLButtonElement;
+        const { emoji, slug } = btn.dataset;
 
         if (emoji && slug && hasUserReacted(slug, emoji)) {
-          btn.disabled = true
+          btn.disabled = true;
         }
 
-        btn.addEventListener('click', () => handleReactionClick(btn))
-      })
+        btn.addEventListener("click", () => handleReactionClick(btn));
+      });
     }
 
-    const { content, createdAtArray } = data.fields
-    const comments: { comment: string, createdAt: Date }[] = content?.map((comment: string, index: number) => ({
+    const { content, createdAtArray } = data.fields;
+    const comments: { comment: string; createdAt: Date }[] = content?.map((comment: string, index: number) => ({
       comment,
       createdAt: new Date(createdAtArray[index]),
-    })) || []
+    })) || [];
 
-    const commentsContainer = document.querySelector('.comments-container')
+    const commentsContainer = document.querySelector(".comments-container");
     if (commentsContainer) {
       if (comments.length > 0) {
         commentsContainer.innerHTML = [...comments]
@@ -285,37 +285,37 @@ async function loadReactionsAndComments(): Promise<void> {
               </p>
             </div>
           `)
-          .join('')
+          .join("");
       }
       else {
-        commentsContainer.innerHTML = '<p class="no-comments text-muted-foreground">No comments yet. Be the first to comment!</p>'
+        commentsContainer.innerHTML = "<p class=\"no-comments text-muted-foreground\">No comments yet. Be the first to comment!</p>";
       }
     }
 
-    const textarea = document.querySelector('textarea[data-slug]')
+    const textarea = document.querySelector("textarea[data-slug]");
     if (textarea) {
-      textarea.setAttribute('data-reaction-id', data.id)
+      textarea.setAttribute("data-reaction-id", data.id);
     }
   }
   catch (error) {
-    console.error('Failed to load reactions and comments:', error)
+    console.error("Failed to load reactions and comments:", error);
 
-    const reactionsContainer = document.getElementById('reactions-container')
+    const reactionsContainer = document.getElementById("reactions-container");
     if (reactionsContainer) {
-      reactionsContainer.innerHTML = '<span class="text-sm text-red-500">Failed to load reactions</span>'
+      reactionsContainer.innerHTML = "<span class=\"text-sm text-red-500\">Failed to load reactions</span>";
     }
 
-    const commentsContainer = document.querySelector('.comments-container')
+    const commentsContainer = document.querySelector(".comments-container");
     if (commentsContainer) {
-      commentsContainer.innerHTML = '<span class="text-sm text-red-500">Failed to load comments</span>'
+      commentsContainer.innerHTML = "<span class=\"text-sm text-red-500\">Failed to load comments</span>";
     }
   }
 }
 
-const form = document.getElementById('comment-form')
+const form = document.getElementById("comment-form");
 if (form) {
-  form.addEventListener('submit', handleComment)
+  form.addEventListener("submit", handleComment);
 }
 
-loadReactionsAndComments()
+loadReactionsAndComments();
 </script>

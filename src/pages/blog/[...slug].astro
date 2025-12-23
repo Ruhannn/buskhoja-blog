@@ -1,27 +1,27 @@
 ---
-import type { CollectionEntry } from 'astro:content'
-import BackToPrev from '@components/BackToPrev.astro'
-import BlogButtons from '@components/BlogButtons.astro'
-import Container from '@components/Container.astro'
-import FormattedDate from '@components/FormattedDate.astro'
+import type { CollectionEntry } from "astro:content";
+import BackToPrev from "@components/BackToPrev.astro";
+import BlogButtons from "@components/BlogButtons.astro";
+import Container from "@components/Container.astro";
+import FormattedDate from "@components/FormattedDate.astro";
 
 
-import Layout from '@layouts/Layout.astro'
-import { readingTime } from '@lib/utils'
-import { getCollection } from 'astro:content'
+import Layout from "@layouts/Layout.astro";
+import { readingTime } from "@lib/utils";
+import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
-  const posts = (await getCollection('blog'))
+  const posts = (await getCollection("blog"))
     .filter(post => !post.data.draft)
-    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
   return posts.map(post => ({
     params: { slug: post.slug },
     props: post,
-  }))
+  }));
 }
-type Props = CollectionEntry<'blog'>
+type Props = CollectionEntry<"blog">;
 
-const post = Astro.props
+const post = Astro.props;
 const { Content } = await post.render();
 ---
 

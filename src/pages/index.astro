@@ -1,12 +1,12 @@
 ---
-import ArrowCard from '@components/ArrowCard.astro'
-import Container from '@components/Container.astro'
-import Link from '@components/Link.astro'
-import { HOME, SITE, SOCIALS } from '@consts'
-import Layout from '@layouts/Layout.astro'
-import { getCollection } from 'astro:content'
+import ArrowCard from "@components/ArrowCard.astro";
+import Container from "@components/Container.astro";
+import Link from "@components/Link.astro";
+import { HOME, SITE, SOCIALS } from "@consts";
+import Layout from "@layouts/Layout.astro";
+import { getCollection } from "astro:content";
 
-const blog = (await getCollection('blog'))
+const blog = (await getCollection("blog"))
   .filter(post => !post.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, SITE.NUM_POSTS_ON_HOMEPAGE);
