@@ -4,6 +4,10 @@ import { SITE } from '@consts'
 import { ClientRouter } from 'astro:transitions'
 import '../styles/global.css'
 
+import '@fontsource/ubuntu/latin-300.css'
+import '@fontsource/ubuntu/latin-500.css'
+import '@fontsource/jetbrains-mono/latin-400.css'
+
 
 interface Props {
   title: string
@@ -19,9 +23,9 @@ const { title, description, image = '/pre.png' } = Astro.props
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<link rel="icon" type="image/svg+xml" href="/favicon-dark.svg" media="(prefers-color-scheme: dark)" >
-<link rel="icon" type="image/svg+xml" href="/favicon-light.svg" media="(prefers-color-scheme: light)" >
-<link rel="icon" type="image/x-icon" href="/favicon-light.svg" >
+<link rel="icon" type="image/svg+xml" href="/favicon-dark.svg" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/svg+xml" href="/favicon-light.svg" media="(prefers-color-scheme: light)">
+<link rel="icon" type="image/x-icon" href="/favicon-light.svg">
 <meta name="generator" content={Astro.generator} />
 
 <!-- Canonical URL -->
