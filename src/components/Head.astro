@@ -1,16 +1,9 @@
 ---
 import { SITE } from '@consts'
 
-// import jetbrainsMono from '@fontsource/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2'
-// import ubuntu400 from '@fontsource/ubuntu/files/ubuntu-latin-300-normal.woff2'
-// import ubuntu500 from '@fontsource/ubuntu/files/ubuntu-latin-500-normal.woff2'
-
 import { ClientRouter } from 'astro:transitions'
 import '../styles/global.css'
 
-import '@fontsource/ubuntu/latin-300.css'
-import '@fontsource/ubuntu/latin-500.css'
-import '@fontsource/jetbrains-mono/latin-400.css'
 
 interface Props {
   title: string
@@ -31,10 +24,6 @@ const { title, description, image = '/pre.png' } = Astro.props
 <link rel="icon" type="image/x-icon" href="/favicon-light.svg" >
 <meta name="generator" content={Astro.generator} />
 
-<!-- Font preloads -->
-<!-- <link rel="preload" href={ubuntu400} as="font" type="font/woff2" crossorigin />
-<link rel="preload" href={ubuntu500} as="font" type="font/woff2" crossorigin />
-<link rel="preload" href={jetbrainsMono} as="font" type="font/woff2" crossorigin /> -->
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
 
