@@ -23,6 +23,8 @@
     "astro": "^5.16.5",
     "axios": "^1.13.2",
     "clsx": "^2.1.1",
+    "hast-util-find-and-replace": "^5.0.1",
+    "remark-emoji": "^5.0.2",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.18"
   },

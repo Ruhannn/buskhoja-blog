@@ -2,9 +2,10 @@
 import ArrowCard from "@components/ArrowCard.astro";
 import Container from "@components/Container.astro";
 import Link from "@components/Link.astro";
-import { HOME, SITE, SOCIALS } from "@consts";
 import Layout from "@layouts/Layout.astro";
 import { getCollection } from "astro:content";
+
+import { HOME, SITE, SOCIALS } from "@consts";
 
 const blog = (await getCollection("blog"))
   .filter(post => !post.data.draft)

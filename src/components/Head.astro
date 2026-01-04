@@ -1,7 +1,8 @@
 ---
+import { ClientRouter } from "astro:transitions";
+
 import { SITE } from "@consts";
 
-import { ClientRouter } from "astro:transitions";
 import "../styles/global.css";
 
 import "@fontsource/ubuntu/latin-300.css";
@@ -9,11 +10,11 @@ import "@fontsource/ubuntu/latin-500.css";
 import "@fontsource/jetbrains-mono/latin-400.css";
 
 
-interface Props {
+type Props = {
   title: string;
   description: string;
   image?: string;
-}
+};
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 

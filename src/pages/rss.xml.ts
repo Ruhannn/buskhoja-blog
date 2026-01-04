@@ -1,10 +1,11 @@
 import rss from "@astrojs/rss";
-import { HOME } from "@consts";
 import { getCollection } from "astro:content";
 
-interface Context {
+import { HOME } from "@consts";
+
+type Context = {
   site: string;
-}
+};
 
 export async function GET(context: Context) {
   const blog = (await getCollection("blog"))
