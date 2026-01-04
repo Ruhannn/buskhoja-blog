@@ -1,4 +1,5 @@
- Introducing Buskhoja: Revolutionizing Bus Navigation in Dhaka
+---
+Introducing Buskhoja: Revolutionizing Bus Navigation in Dhaka
 description: Explore how Buskhoja simplifies urban commuting in Dhaka with comprehensive bus route information, real-time fares, and intuitive tools.
 date: "Jan 05 2026"
 ---
@@ -40,4 +41,3 @@ Users simply input their starting point and destination via the intuitive search
 
 - **[X Account](https://x.com/buskhoja)**: Follow for professional updates on bus routes, fare changes, and Dhaka transport insights. Share ideas through replies and get timely announcements.
 - **[Discord Server](https://discord.gg/mxJrVqz4Qz)**: A space to ask questions, get updates, share experiences, and join the community to provide ideas and suggestions. Both platforms serve similar purposes—choose what suits you best.
-
