@@ -1,5 +1,5 @@
 ---
-Introducing Buskhoja: Revolutionizing Bus Navigation in Dhaka
+title: Introducing Buskhoja
 description: Explore how Buskhoja simplifies urban commuting in Dhaka with comprehensive bus route information, real-time fares, and intuitive tools.
 date: "Jan 05 2026"
 ---
