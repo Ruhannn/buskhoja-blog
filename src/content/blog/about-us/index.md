@@ -35,9 +35,18 @@ Users simply input their starting point and destination via the intuitive search
 - **[Fire Service](https://buskhoja.xyz/Fire-service)**: Access emergency fire services with contacts, station locations, and quick response routes for critical situations.
 - **[Contact](https://buskhoja.xyz/Contact)**: Connect with us at our Dhaka office, via email at info@buskhoja.com, or phone +880 1617593869. Proudly created by Mawts students.
 - **[Locations](https://buskhoja.xyz/Locations)**: Browse a comprehensive list of major stops, landmarks, and neighborhoods in Dhaka, complete with linked bus routes and fare estimates.
-
 ## Join Our Community
 
-- **[X Account](https://x.com/buskhoja)**: Follow for professional updates on bus routes, fare changes, and Dhaka transport insights. Share ideas through replies and get timely announcements.
-- **[Discord Server](https://discord.gg/mxJrVqz4Qz)**: A space to ask questions, get updates, share experiences, and join the community to provide ideas and suggestions. Both platforms serve similar purposes—choose what suits you best.
+<div align="center">
+  <a href="https://x.com/buskhoja">
+    <img src="https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white" alt="X Account" />
+  </a>
+  <a href="https://discord.gg/mxJrVqz4Qz">
+    <img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord Server" />
+  </a>
+</div>
+
+- **[X Account](https://x.com/buskhoja)**: Follow for professional updates on bus routes, fare changes, and Dhaka transport insights.
+- **[Discord Server](https://discord.gg/mxJrVqz4Qz)**: A space to ask questions, get updates, and share experiences with the community.
+
 
