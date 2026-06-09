@@ -1,3 +1,9 @@
+---
+title: "Privacy & Policy"
+description: "Buskhoja application privacy and policy"
+date: "June 09 2026"
+---
+
 # Privacy Policy
 
 **Application Name:** BusKhoja
@@ -291,7 +297,6 @@ BusKhoja retains collected information only for as long as necessary to fulfill 
 Where there is a legal obligation to retain certain data for a specified period, we will comply with that requirement, after which the data will be securely deleted or anonymized.
 
 ---
-
 
 ## 14. Changes to This Privacy Policy
 
